@@ -1,0 +1,4 @@
+include "deployment",
+        "functions",
+        "functions:api-handler1",
+        "functions:queue-consumer1"

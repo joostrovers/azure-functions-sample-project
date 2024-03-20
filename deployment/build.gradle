@@ -1,0 +1,70 @@
+task terraformInit(type: Exec) {
+    dependsOn ":verifyTerraform"
+    dependsOn ":build"
+    inputs.files fileTree(dir: '.', include: '*.tf')
+    outputs.upToDateWhen { file(".terraform").exists() }
+    commandLine terraformExecutable
+    args "init"
+}
+
+task terraformInitUpgrade(type: Exec) {
+    dependsOn ":verifyTerraform"
+    dependsOn ":build"
+    inputs.files fileTree(dir: '.', include: '*.tf')
+    outputs.upToDateWhen { file(".terraform").exists() }
+    commandLine terraformExecutable
+    args "init", "-upgrade"
+}
+
+task terraformPlan(type: Exec) {
+    dependsOn ":verifyTerraform"
+    dependsOn ":build"
+    dependsOn terraformInit
+    commandLine terraformExecutable
+    args "plan"
+}
+
+task terraformApply(type: Exec) {
+    dependsOn ":verifyTerraform"
+    dependsOn ":build"
+    dependsOn terraformInit
+    commandLine terraformExecutable
+    args "apply", "-auto-approve"
+}
+
+task terraformDestroy(type: Exec) {
+    dependsOn ":verifyTerraform"
+    dependsOn terraformInit
+    commandLine terraformExecutable
+    args "destroy", "-auto-approve"
+}
+
+task terraformOutput(type: Exec) {
+    dependsOn ":verifyTerraform"
+    dependsOn terraformInit
+    mustRunAfter terraformApply
+    inputs.file("terraform.tfstate")
+    outputs.file("terraform.output.json")
+    commandLine terraformExecutable
+    args "output", "-json"
+    doFirst {
+        standardOutput new FileOutputStream("${projectDir}/terraform.output.json")
+    }
+}
+
+task clean(type: Delete) {
+    delete "${projectDir}/.terraform"
+    delete "${projectDir}/terraform.output.json"
+}
+
+task plan {}
+plan.dependsOn(terraformPlan)
+
+task apply {}
+apply.dependsOn(terraformApply)
+
+task deploy {}
+deploy.dependsOn(apply)
+
+task destroy {}
+destroy.dependsOn(terraformDestroy)

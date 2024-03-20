@@ -1,2 +1,9 @@
 /.gradle/
 /.idea/
+node_modules/
+build/
+.terraform/
+.terraform.tfstate.lock.info
+terraform.tfstate
+terraform.tfstate.backup
+terraform.tfvars

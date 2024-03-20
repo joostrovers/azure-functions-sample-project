@@ -1,0 +1,4 @@
+task build {
+    dependsOn "api-handler1:build"
+    dependsOn "queue-consumer1:build"
+}
