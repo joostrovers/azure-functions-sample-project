@@ -33,3 +33,9 @@ variable azure_location {
   description = "Azure Location where infrastructure will be deployed"
   default     = "westeurope"
 }
+
+variable application_insights_smart_detection_email_recipients {
+  type = list(string)
+  description = "Email addresses that should receive application insights emails"
+  default     = []
+}
