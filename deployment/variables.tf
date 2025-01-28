@@ -28,14 +28,14 @@ variable "prefix" {
   default     = "afsp-test"
 }
 
-variable azure_location {
+variable "azure_location" {
   type        = string
   description = "Azure Location where infrastructure will be deployed"
   default     = "westeurope"
 }
 
-variable application_insights_smart_detection_email_recipients {
-  type = list(string)
+variable "application_insights_smart_detection_email_recipients" {
+  type        = list(string)
   description = "Email addresses that should receive application insights emails"
   default     = []
 }

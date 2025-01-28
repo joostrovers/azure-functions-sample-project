@@ -1,6 +1,6 @@
-def requiredVersionTerraform = "^1.1.9"
-def requiredVersionNodeJS = "^18.0.0"
-def requiredVersionTsc = "^4.0.0"
+def requiredVersionTerraform = "^1.10.3"
+def requiredVersionNodeJS = "^22.0.0"
+def requiredVersionTsc = "^5.0.0"
 
 allprojects {
     ext {
@@ -141,8 +141,15 @@ task verifyTsc {
     }
 }
 
+task copyFunctionApp(type: Copy) {
+    dependsOn "function-app:build"
+    from file("function-app/build/dist/function.zip")
+    into "module"
+    rename { "function-app.zip" }
+}
+
 task build {
-    dependsOn "functions:build"
+    dependsOn copyFunctionApp
 }
 
 task clean {}

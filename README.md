@@ -4,8 +4,8 @@
 
 Following applications available in path:
 * [OpenJDK](https://jdk.java.net/21/) (v21 or lower)
-* [Terraform](https://developer.hashicorp.com/terraform/install?product_intent=terraform) (V1.5.6 or higher)
-* [Node.JS](https://nodejs.org/en/download) (v18)
+* [Terraform](https://developer.hashicorp.com/terraform/install?product_intent=terraform) (V1.10.3 or higher)
+* [Node.JS](https://nodejs.org/en/download) (v22)
 * Typescript (npm install -g typescript)
 
 ## Configuration
