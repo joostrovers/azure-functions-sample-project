@@ -5,7 +5,7 @@ import { queueHandler } from "./queue-handler";
 
 app.http("api-handler", {
     route: "{*path}",
-    methods: ["GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "TRACE", "CONNECT"],
+    methods: ["GET"],
     authLevel: "anonymous",
     handler: apiHandler
 });

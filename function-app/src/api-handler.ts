@@ -4,23 +4,26 @@ import { QueueClient } from "@azure/storage-queue";
 
 
 export async function apiHandler(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit | HttpResponse> {
-    const msg = `api-handler invoked at ${new Date().toISOString()}`;
+    const msg = {
+        message: "Message from api-handler",
+        timestamp: new Date().toISOString(),
+    };
 
     context.info(msg);
 
     try {
         const queueClient = new QueueClient(process.env.QUEUE_URL, new DefaultAzureCredential());
-        await queueClient.sendMessage(toBase64(msg));
+        await queueClient.sendMessage(toBase64(JSON.stringify(msg)));
 
         return {
             status: 200,
-            body: msg,
-        }
+            jsonBody: msg,
+        };
     } catch (error) {
         return {
             status: 200,
             body: error.toString(),
-        }
+        };
     }
 }
 
