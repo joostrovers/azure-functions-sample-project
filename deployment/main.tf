@@ -34,7 +34,7 @@ module "function_app_consumption_plan" {
   use_flex_consumption_plan = false
 
   resource_group  = azurerm_resource_group.resource_group
-  storage_account = azurerm_storage_account.storage_account
+  storage_account = azurerm_storage_account.storage_account_cp
   app_insights    = azurerm_application_insights.app_insights
 }
 
@@ -46,6 +46,6 @@ module "function_app_flex_consumption_plan" {
   use_flex_consumption_plan = true
 
   resource_group  = azurerm_resource_group.resource_group
-  storage_account = azurerm_storage_account.storage_account
+  storage_account = azurerm_storage_account.storage_account_fcp
   app_insights    = azurerm_application_insights.app_insights
 }

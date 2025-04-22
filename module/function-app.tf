@@ -63,6 +63,12 @@ resource "azapi_resource" "function_app" {
           version = "20"
         }
         scaleAndConcurrency = {
+          alwaysReady = [
+            {
+              name          = "function:queue-handler"
+              instanceCount = 1
+            }
+          ]
           instanceMemoryMB     = 2048
           maximumInstanceCount = 100
         }
