@@ -4,16 +4,19 @@ import { QueueClient } from "@azure/storage-queue";
 
 
 export async function apiHandler(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit | HttpResponse> {
-    const msg = {
-        message: "Message from api-handler",
-        timestamp: new Date().toISOString(),
-    };
-
-    context.info(msg);
-
     try {
-        const queueClient = new QueueClient(process.env.QUEUE_URL, new DefaultAzureCredential());
-        await queueClient.sendMessage(toBase64(JSON.stringify(msg)));
+        const msg = {
+            message: "Message from api-handler",
+            timestamp: new Date().toISOString(),
+        };
+
+        if (request.method?.toUpperCase() === "GET") {
+            context.info(msg);
+
+            const queueClient = new QueueClient(process.env.QUEUE_URL, new DefaultAzureCredential());
+            await queueClient.sendMessage(toBase64(JSON.stringify(msg)));
+            context.info(`##### Inserted message in queue with timestamp: ${msg.timestamp} #####`)
+        }
 
         return {
             status: 200,
